@@ -41,7 +41,6 @@ section:nth-of-type(2) {
 
 canvas {
     width: 100%;
-    max-width: 750px;
     image-rendering: pixelated;
 }
 
