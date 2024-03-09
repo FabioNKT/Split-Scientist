@@ -679,21 +679,27 @@ document.addEventListener('DOMContentLoaded', function () {
         hitboxBigPotRuby.draw()
 
         timerBigPotArrayR.forEach((objectTimer) => {
+            objectTimer.update(deltaTimeR);
             objectTimer.draw()
         })
 
         timerBigPotRubyArrayR.forEach((objectTimer) => {
+            objectTimer.update(deltaTimeR);
             objectTimer.draw()
         })
 
         timerShadowArrayR.forEach((objectTimer) => {
+            objectTimer.update(deltaTimeR);
             objectTimer.draw()
         })
 
+        playerR.update(deltaTimeR)
         playerR.draw()
         hitboxR.draw()
 
+        arrowR.update(deltaTimeR);
         arrowR.draw()
+        arrowDownGarbageR.update(deltaTimeR);
         arrowDownGarbageR.draw()
 
         // Hitbox interaction ////////////////////////////////////////////////////////////////////////////////////////
@@ -717,7 +723,6 @@ document.addEventListener('DOMContentLoaded', function () {
             inventoryR[0] != 'oilStar' &&
             inventoryR[0] != 'oilTriangle') {
             inventoryR.shift()
-            // console.log(inventoryR)
         }
 
         hitboxBigPotArrayR.forEach((objectHitbox, index) => {
@@ -1338,6 +1343,12 @@ document.addEventListener('DOMContentLoaded', function () {
             keys.ArrowLeft.pressed != true &&
             keys.ArrowRight.pressed != true) {
             playerR.tick = 10
+        }
+
+        if (!keys.ArrowUp.pressed && !keys.ArrowDown.pressed && !keys.ArrowLeft.pressed && !keys.ArrowRight.pressed) {
+            playerR.moving = false;
+            playerR.currentFrame = 0;
+            playerR.elapsedTime = 0;
         }
 
         if (keys.ArrowUp.pressed && lastKeyR === 'ArrowUp' &&

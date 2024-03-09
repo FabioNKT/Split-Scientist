@@ -43,7 +43,7 @@ wordt opgeroepen via de loop, hij blijft dus incrementen met 1.
 zorgt ervoor dat animaties kunnen worden afgespeeld maar de tick gaat snel
 dus heb je een buffer nodig FRAME_ITERATE, frames worden om de 12 ticks geïtereerd */
 let tickAlways = 0
-const FRAME_ITERATE = 12
+const FRAME_ITERATE = 120
 
 /* Player animaties staan op 1 spritesheet, dit is puur om beter te lezen welke 
 animation state ik wil aanspreken, de eerste animatie is naar beneden, de tweede
@@ -1011,21 +1011,27 @@ function render(timestamp) {
     hitboxBigPotPotion.draw()
 
     timerBigPotArrayL.forEach((objectTimer) => {
+        objectTimer.update(deltaTime);
         objectTimer.draw()
     })
 
     timerBigPotPotionArrayL.forEach((objectTimer) => {
+        objectTimer.update(deltaTime);
         objectTimer.draw()
     })
 
     timerShadowArrayL.forEach((objectTimer) => {
+        objectTimer.update(deltaTime);
         objectTimer.draw()
     })
 
+    playerL.update(deltaTime);
     playerL.draw()
     hitboxL.draw()
 
+    arrowDown.update(deltaTime);
     arrowDown.draw()
+    arrowDownGarbageL.update(deltaTime);
     arrowDownGarbageL.draw()
 
     // Hitbox interaction ////////////////////////////////////////////////////////////////////////////////////////
@@ -1444,7 +1450,6 @@ function render(timestamp) {
     if (endPotArray[0].itemHeld[0] === 'potionGreen' &&
         endPotArray[1].itemHeld[0] === 'potionRed' &&
         endPotArray[2].itemHeld[0] === 'blueShard') {
-        // console.log('left')
         endPotArray[0].itemHeld.shift()
         endPotArray[0].itemHeld.push('busy')
         endPotArray[1].itemHeld.shift()
@@ -1807,6 +1812,12 @@ function render(timestamp) {
         keys.s.pressed != true &&
         keys.d.pressed != true) {
         playerL.tick = 10
+    }
+
+    if (!keys.w.pressed && !keys.a.pressed && !keys.s.pressed && !keys.d.pressed) {
+        playerL.moving = false;
+        playerL.currentFrame = 0;
+        playerL.elapsedTime = 0;
     }
 
     /* (keys.w.pressed && lastKeyL === 'w') zegt als w ingedrukt is en het was de laatste key doe dan */

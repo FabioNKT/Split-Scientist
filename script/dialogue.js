@@ -49,7 +49,6 @@ function renderDialogue() {
         dialogueBox.textContent = ''
         txtIncrementD = 0
         dialogueCount++
-        console.log(dialogueCount)
         dialogueBox.style.display = 'none'
     }
 
@@ -83,7 +82,6 @@ function renderDialogue() {
         dialogueBox.textContent = ''
         txtIncrementD = 0
         dialogueCount++
-        console.log(dialogueCount)
         dialogueBox.style.display = 'none'
     }
 

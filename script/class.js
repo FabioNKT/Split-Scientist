@@ -101,20 +101,41 @@ de player naartoe kijkt */
 
 class SpritePlayer {
     constructor(context, playerState) {
-        this.whichContext = context
-        this.width = 16
-        this.height = 32
+        this.whichContext = context;
+        this.width = 16;
+        this.height = 32;
         this.position = {
             x: (CANVAS_WIDTH - 16) / 2,
             y: (CANVAS_HEIGHT - 32) / 2
-        }
+        };
         this.moving = false;
-        this.playerState = playerState
-        this.tick = 10
+        this.playerState = playerState;
+        this.elapsedTime = 0;
+        this.currentFrame = 0;
+        this.justStartedMoving = true
     }
+
+    update(deltaTime) {
+        if (this.moving) {
+            if (this.justStartedMoving) {
+                this.currentFrame = 1;
+                this.justStartedMoving = false;
+            }
+            this.elapsedTime += deltaTime * 1000;
+
+            if (this.elapsedTime >= FRAME_ITERATE) {
+                this.currentFrame = (this.currentFrame + 1) % 4;
+                this.elapsedTime -= FRAME_ITERATE;
+            }
+        } else {
+            this.currentFrame = 0;
+            this.elapsedTime = 0;
+            this.justStartedMoving = true;
+        }
+    }
+
     draw() {
-        let frameRate = Math.floor(this.tick / FRAME_ITERATE) % 4;
-        let frameX = frameRate * this.width;
+        let frameX = this.currentFrame * this.width;
         let frameY = this.playerState * this.height;
         this.whichContext.drawImage(
             playerImage,
@@ -126,38 +147,51 @@ class SpritePlayer {
             this.position.y,
             this.width,
             this.height
-        )
-        if (this.moving) {
-            this.tick++
-        }
+        );
     }
 }
 
+
 class SpriteIndicator {
-    constructor(context, position, image, frames, frameIterate) {
-        this.whichContext = context
-        this.position = position
-        this.image = image
-        this.frames = frames
-        this.frameIterate = frameIterate
+    constructor(context, position, image, frames, frameDuration) {
+        this.whichContext = context;
+        this.position = position;
+        this.image = image;
+        this.frames = frames;
+        this.frameDuration = frameDuration; // Duration of each frame in milliseconds
+        this.currentFrame = 0; // Current frame index
+        this.elapsedTime = 0; // Time accumulated since last frame change
     }
+
+    update(deltaTime) {
+        // Convert deltaTime to milliseconds and accumulate elapsed time
+        this.elapsedTime += deltaTime * 1000;
+
+        // Check if it's time to update to the next frame
+        if (this.elapsedTime >= this.frameDuration) {
+            this.currentFrame = (this.currentFrame + 1) % this.frames; // Loop through frames
+            this.elapsedTime = 0; // Reset elapsed time
+        }
+    }
+
     draw() {
-        let frameRate2 = Math.floor(tickAlways / this.frameIterate) % this.frames;
-        let frameX2 = frameRate2 * (this.image.width / this.frames);
+        let frameWidth = this.image.width / this.frames;
+        let frameX = this.currentFrame * frameWidth;
+
         this.whichContext.drawImage(
             this.image,
-            frameX2,
+            frameX,
             0,
-            this.image.width / this.frames,
+            frameWidth,
             this.image.height,
             this.position.x,
             this.position.y,
-            this.image.width / this.frames,
+            frameWidth,
             this.image.height
-        )
-        tickAlways++
+        );
     }
 }
+
 
 class Collision {
     constructor(position, context) {
