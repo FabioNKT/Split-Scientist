@@ -609,7 +609,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Render canvasR ////////////////////////////////////////////////////////////////////////////////////////
 
-    function renderR() {
+    let lastTimeR = 0
+
+    function renderR(timestamp) {
+
+        if (!lastTimeR) lastTimeR = timestamp;
+
+        let deltaTimeR = (timestamp - lastTimeR) / 1000;
+        lastTimeR = timestamp;
+
         ctxR.clearRect(0, 0, CANVAS_WIDTH_R, CANVAS_HEIGHT_R)
 
         // Draw
@@ -1355,7 +1363,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (movingR)
                 movableObjectsR.forEach((movable) => {
-                    movable.position.y += 2
+                    movable.position.y += Math.round(movementSpeedPerSecond * deltaTimeR)
                 })
 
         } else if (keys.ArrowLeft.pressed && lastKeyR === 'ArrowLeft' &&
@@ -1381,7 +1389,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (movingR)
                 movableObjectsR.forEach((movable) => {
-                    movable.position.x += 2
+                    movable.position.x += Math.round(movementSpeedPerSecond * deltaTimeR)
                 })
         } else if (keys.ArrowDown.pressed && lastKeyR === 'ArrowDown' &&
             dialogueR != true && dialogue != true) {
@@ -1406,7 +1414,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (movingR)
                 movableObjectsR.forEach((movable) => {
-                    movable.position.y -= 2
+                    movable.position.y -= Math.round(movementSpeedPerSecond * deltaTimeR)
                 })
         } else if (keys.ArrowRight.pressed && lastKeyR === 'ArrowRight' &&
             dialogueR != true && dialogue != true) {
@@ -1431,7 +1439,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (movingR)
                 movableObjectsR.forEach((movable) => {
-                    movable.position.x -= 2
+                    movable.position.x -= Math.round(movementSpeedPerSecond * deltaTimeR)
                 })
         } else if (keys.ArrowUp.pressed &&
             dialogueR != true && dialogue != true) {
@@ -1456,7 +1464,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (movingR)
                 movableObjectsR.forEach((movable) => {
-                    movable.position.y += 2
+                    movable.position.y += Math.round(movementSpeedPerSecond * deltaTimeR)
                 })
         } else if (keys.ArrowLeft.pressed &&
             dialogueR != true && dialogue != true) {
@@ -1481,7 +1489,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (movingR)
                 movableObjectsR.forEach((movable) => {
-                    movable.position.x += 2
+                    movable.position.x += Math.round(movementSpeedPerSecond * deltaTimeR)
                 })
         } else if (keys.ArrowDown.pressed &&
             dialogueR != true && dialogue != true) {
@@ -1506,7 +1514,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (movingR)
                 movableObjectsR.forEach((movable) => {
-                    movable.position.y -= 2
+                    movable.position.y -= Math.round(movementSpeedPerSecond * deltaTimeR)
                 })
         } else if (keys.ArrowRight.pressed &&
             dialogueR != true && dialogue != true) {
@@ -1531,7 +1539,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (movingR)
                 movableObjectsR.forEach((movable) => {
-                    movable.position.x -= 2
+                    movable.position.x -= Math.round(movementSpeedPerSecond * deltaTimeR)
                 })
         }
 
@@ -1625,7 +1633,7 @@ document.addEventListener('DOMContentLoaded', function () {
             2,
             1000)
 
-        renderR();
+        requestAnimationFrame(renderR);
     }).catch(error => {
         console.error('Error loading images:', error);
     });

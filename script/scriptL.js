@@ -62,6 +62,8 @@ let instructionSteps = 0;
 
 let txtIncrement = 0;
 
+let movementSpeedPerSecond = 130;
+
 // Inventory
 /* Bestaat uit een array en items worden gepusht en geshift afhankelijk van
 wat voor interactie er is*/
@@ -926,9 +928,17 @@ const imageSources = [
 
 // Render canvasL ////////////////////////////////////////////////////////////////////////////////////////
 
+let lastTime = 0;
+
 /* function dat zichzelf called nadat hij een keer is gecalled door requestAnimationFrame
 hij looped dus */
-function render() {
+function render(timestamp) {
+
+    if (!lastTime) lastTime = timestamp;
+
+    let deltaTime = (timestamp - lastTime) / 1000;
+    lastTime = timestamp;
+
     /* Aangezien positie van canvas elementen de hele tijd verplaatsen moet de oude positie
     gecleared worden, met clearRect, beginpunt linksboven (0,0) en rekt uit over de hele
     canvas breedte en hoogte */
@@ -1820,6 +1830,7 @@ function render() {
         ware. Dit zorgt ervoor hij niet al botst in de muur en al vast zit waardoor movingL altijd false zal
         zijn omdat je vast zit in de muur, deze is 2px naar beneden omdat we van beneden aankomen met w
         ingedrukt */
+
         for (i = 0; i < collisionObjectArrayL.length; i++) {
             if (collisionInteraction({
                     shape1: hitboxL,
@@ -1845,7 +1856,7 @@ function render() {
         wordt gerefereerd met dot notation movable.position.y += 2 */
         if (movingL)
             movableObjectsL.forEach((movable) => {
-                movable.position.y += 2
+                movable.position.y += Math.round(movementSpeedPerSecond * deltaTime)
             })
 
     } else if (keys.a.pressed && lastKeyL === 'a' &&
@@ -1871,7 +1882,7 @@ function render() {
 
         if (movingL)
             movableObjectsL.forEach((movable) => {
-                movable.position.x += 2
+                movable.position.x += Math.round(movementSpeedPerSecond * deltaTime)
             })
     } else if (keys.s.pressed && lastKeyL === 's' &&
         dialogueL != true && dialogue != true) {
@@ -1896,7 +1907,7 @@ function render() {
 
         if (movingL)
             movableObjectsL.forEach((movable) => {
-                movable.position.y -= 2
+                movable.position.y -= Math.round(movementSpeedPerSecond * deltaTime)
             })
     } else if (keys.d.pressed && lastKeyL === 'd' &&
         dialogueL != true && dialogue != true) {
@@ -1921,7 +1932,7 @@ function render() {
 
         if (movingL)
             movableObjectsL.forEach((movable) => {
-                movable.position.x -= 2
+                movable.position.x -= Math.round(movementSpeedPerSecond * deltaTime)
             })
     } else if (keys.w.pressed &&
         dialogueL != true && dialogue != true) {
@@ -1946,7 +1957,7 @@ function render() {
 
         if (movingL)
             movableObjectsL.forEach((movable) => {
-                movable.position.y += 2
+                movable.position.y += Math.round(movementSpeedPerSecond * deltaTime)
             })
     } else if (keys.a.pressed &&
         dialogueL != true && dialogue != true) {
@@ -1971,7 +1982,7 @@ function render() {
 
         if (movingL)
             movableObjectsL.forEach((movable) => {
-                movable.position.x += 2
+                movable.position.x += Math.round(movementSpeedPerSecond * deltaTime)
             })
     } else if (keys.s.pressed &&
         dialogueL != true && dialogue != true) {
@@ -1996,7 +2007,7 @@ function render() {
 
         if (movingL)
             movableObjectsL.forEach((movable) => {
-                movable.position.y -= 2
+                movable.position.y -= Math.round(movementSpeedPerSecond * deltaTime)
             })
     } else if (keys.d.pressed &&
         dialogueL != true && dialogue != true) {
@@ -2021,7 +2032,7 @@ function render() {
 
         if (movingL)
             movableObjectsL.forEach((movable) => {
-                movable.position.x -= 2
+                movable.position.x -= Math.round(movementSpeedPerSecond * deltaTime)
             })
     }
 
@@ -2130,7 +2141,7 @@ Promise.all(imageSources.map(src => loadImage(src))).then(images => {
         2,
         1000)
 
-    render();
+    requestAnimationFrame(render);
 }).catch(error => {
     console.error('Error loading images:', error);
 });
