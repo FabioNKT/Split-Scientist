@@ -1,6 +1,7 @@
 // Assets: https://limezu.itch.io/moderninteriors
 // https://oege.ie.hva.nl/~tranfn/
 // Tutorial gevolgd voor map movement & collisions: https://www.youtube.com/watch?v=yP5DKzriqXA&t=10973s
+// Game geïnspireerd door We Were Here Together
 
 /* Neemt canvas element van DOM & geeft 2d context zodat
 ik kan tekenen & images plaatsen. Specfiek gerefereerd met een L 

@@ -772,7 +772,7 @@ document.addEventListener('DOMContentLoaded', function () {
             oneTimeR === 1 &&
             hitboxBigPotRuby.itemHeld.length === 0 &&
             hitboxOilpotSquareRuby.itemHeld.length === 0 &&
-            !objectHitbox.isItemBeingCrafted
+            !hitboxBigPotRuby.isItemBeingCrafted
         ) {
             // console.log('Dont execute potion there is no oil')
         } else if (collisionInteraction({
@@ -783,12 +783,12 @@ document.addEventListener('DOMContentLoaded', function () {
             oneTimeR === 1 &&
             hitboxBigPotRuby.itemHeld.length === 0 &&
             hitboxOilpotSquareRuby.itemHeld.length === 1 &&
-            !objectHitbox.isItemBeingCrafted) {
+            !hitboxBigPotRuby.isItemBeingCrafted) {
 
-            objectHitbox.isItemBeingCrafted = true;
+            hitboxBigPotRuby.isItemBeingCrafted = true;
             timerBigPotRuby.image = timerImage
             setTimeout(() => {
-                objectHitbox.isItemBeingCrafted = false;
+                hitboxBigPotRuby.isItemBeingCrafted = false;
                 hitboxBigPotRuby.itemHeld.push('ruby')
                 timerBigPotRuby.image = emptyImage
             }, 1500)
