@@ -2088,6 +2088,7 @@ function render(timestamp) {
                 introductionP.textContent += txt1[txtIncrement]
                 txtIncrement++
             }
+            step1.update(deltaTime);
             step1.draw()
             break
         case 1:
@@ -2095,6 +2096,7 @@ function render(timestamp) {
                 introductionP.textContent += txt2[txtIncrement]
                 txtIncrement++
             }
+            step2.update(deltaTime);
             step2.draw()
             break
         case 2:
@@ -2109,6 +2111,7 @@ function render(timestamp) {
                 introductionP.textContent += txt4[txtIncrement]
                 txtIncrement++
             }
+            step4.update(deltaTime);
             step4.draw()
             break
     }
@@ -2126,7 +2129,7 @@ Promise.all(imageSources.map(src => loadImage(src))).then(images => {
         },
         step1Image,
         4,
-        1000)
+        640)
 
     step2 = new SpriteIndicator(
         ctxL, {
@@ -2135,7 +2138,7 @@ Promise.all(imageSources.map(src => loadImage(src))).then(images => {
         },
         step2Image,
         2,
-        1000)
+        640)
 
     step3 = new Sprite(
         ctxL, {
@@ -2151,7 +2154,7 @@ Promise.all(imageSources.map(src => loadImage(src))).then(images => {
         },
         step4Image,
         2,
-        1000)
+        640)
 
     requestAnimationFrame(render);
 }).catch(error => {

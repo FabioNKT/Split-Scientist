@@ -1579,6 +1579,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     introductionPR.textContent += txt1R[txtIncrementR]
                     txtIncrementR++
                 }
+                step1R.update(deltaTimeR);
                 step1R.draw()
                 break
             case 1:
@@ -1586,6 +1587,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     introductionPR.textContent += txt2R[txtIncrementR]
                     txtIncrementR++
                 }
+                step2R.update(deltaTimeR);
                 step2R.draw()
                 break
             case 2:
@@ -1600,6 +1602,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     introductionPR.textContent += txt4R[txtIncrementR]
                     txtIncrementR++
                 }
+                step4R.update(deltaTimeR);
                 step4R.draw()
                 break
         }
@@ -1617,7 +1620,7 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             step1RImage,
             4,
-            1000)
+            640)
 
         step2R = new SpriteIndicator(
             ctxR, {
@@ -1626,7 +1629,7 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             step2RImage,
             2,
-            1000)
+            640)
 
         step3R = new Sprite(
             ctxR, {
@@ -1642,7 +1645,7 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             step4RImage,
             2,
-            1000)
+            640)
 
         requestAnimationFrame(renderR);
     }).catch(error => {

@@ -158,19 +158,17 @@ class SpriteIndicator {
         this.position = position;
         this.image = image;
         this.frames = frames;
-        this.frameDuration = frameDuration; // Duration of each frame in milliseconds
-        this.currentFrame = 0; // Current frame index
-        this.elapsedTime = 0; // Time accumulated since last frame change
+        this.frameDuration = frameDuration;
+        this.currentFrame = 0;
+        this.elapsedTime = 0;
     }
 
     update(deltaTime) {
-        // Convert deltaTime to milliseconds and accumulate elapsed time
         this.elapsedTime += deltaTime * 1000;
 
-        // Check if it's time to update to the next frame
         if (this.elapsedTime >= this.frameDuration) {
-            this.currentFrame = (this.currentFrame + 1) % this.frames; // Loop through frames
-            this.elapsedTime = 0; // Reset elapsed time
+            this.currentFrame = (this.currentFrame + 1) % this.frames;
+            this.elapsedTime = 0;
         }
     }
 
